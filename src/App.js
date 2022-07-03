@@ -1,21 +1,100 @@
-import logo from './logo.svg';
+import React, {useEffect, useState} from 'react';
 import './App.css';
 import JobListComp from './Components/JobListComp';
+import data from './Components/data.json';
+import FilterComp from './Components/FilterComp';
 
 function App() {
+  const [jobs, setJobs] = useState([]);
+  const [filters, setFilters] = useState([]);
+
+
+  // console.log(data);
+  useEffect(() => {
+    setJobs(data); 
+    changeBackground();
+  }, []);
+
+  function changeBackground() {
+    const headerImg = document.querySelector('.header--image');
+    if(window.innerWidth >= 765) {
+      headerImg.src = "../images/bg-header-desktop.svg";
+    }
+    else {
+      headerImg.src = "../images/bg-header-mobile.svg";
+    }
+  }
+
+  window.addEventListener('resize', changeBackground)
+
+
+
+
+  function handleTagClick(tag) {
+    if(filters.indexOf(tag) === -1) {
+      setFilters(prevState => [...prevState, tag])
+    }
+  }
+
+  function clearFilter(tag) {
+    setFilters(filters.filter((item) => item !== tag));
+  }
+
+
+  function clearAll() {
+    setFilters([]);
+  }
+
   return (
     <>
-      <header className='w-full bg-teal-800 z-10'>
-        <img className='w-full object-cover z-10' src="../images/bg-header-mobile.svg" alt="" />
+      <header className='w-full bg-teal-800 z-10 transition ease-in duration-300'>
+        <img className='header--image w-full object-cover z-10' src="../images/bg-header-mobile.svg" alt="" />
       </header>
-      <div className='bg-white z-50 relative bottom-10 flex items-center flex-wrap my-0 mx-auto w-[25rem] p-5 shadow-lg'>
-        <div className='bg-teal-100 py-0 px-0 rounded-md flex gap-1 cursor-pointer text-white'>
-          <span className='text-teal-500 py-1 rounded-tl-sm rounded-bl-sm font-bold bg-teal-100 px-2'>filter</span>
-          <span className='text-white font-bold py-1 bg-teal-500 px-2 rounded-tr-sm rounded-br-sm '>X</span>
-        </div>
-        <button className='ml-auto bg-slate-50 px-2 text-slate-600 cursor-pointer hover:text-teal-500 ease-in duration-300 transition'>Clear</button>
-      </div>
-      <JobListComp />
+      {filters.length > 0 && 
+        <FilterComp 
+        filters={filters}
+        clearFilter={clearFilter}
+        clearAll={clearAll}
+      />}
+     {/* <FilterComp />  */}
+     {jobs.map((job) => {
+      let jobTags = [job.role, job.level, ...(job.languages) || [], ...(job.tools) || []]
+
+
+      let filterJobs = (jobTags, filters) => 
+          filters.every((filter) => jobTags.includes(filter));
+
+          return filters.length === 0 ? (
+            <JobListComp 
+              job={job}
+              key={job.id}
+              handleTagClick={handleTagClick}
+            />
+          ) :
+          ( filterJobs(jobTags, filters) && (
+
+            <JobListComp
+            job={job}
+            key={job.id}
+            handleTagClick={handleTagClick}
+            />
+            )
+          );
+     })}
+      {/* {jobs.length === 0 ? 
+      (
+      <p>Jobs are Fetching ...</p>
+      )  : 
+      (
+          jobs.map((job) => 
+            <JobListComp
+              job={job}
+              key={job.id}
+              handleTagClick={handleTagClick}
+             /> 
+          )
+        )
+      } */}
     </>
   );
 }
