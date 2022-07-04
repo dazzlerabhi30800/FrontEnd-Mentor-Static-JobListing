@@ -2,10 +2,10 @@ import React from "react";
 
 function FilterComp({ filters, clearFilter, clearAll }) {
   return (
-    <div className="bg-white z-50 relative bottom-10 flex items-center flex-wrap my-0 mx-auto w-[25rem] p-5 shadow-lg">
+    <div className="bg-white z-50 relative bottom-10 flex items-center flex-wrap my-0 mx-auto w-[25rem] p-5 shadow-lg md:w-[40rem]">
       {filters.map((tag, index) => {
         return (
-          <div key={index} className="bg-teal-100 py-0 px-0 rounded-md flex gap-1 ml-2 my-1 cursor-pointer text-white">
+          <div key={index} className="bg-teal-100 py-0 px-0 rounded-md flex gap-1 ml-4 my-1 cursor-pointer text-white">
             <span className="text-teal-500 py-1 rounded-tl-sm rounded-bl-sm font-bold bg-teal-100 px-2">
               {tag}
             </span>

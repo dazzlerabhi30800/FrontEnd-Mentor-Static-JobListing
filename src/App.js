@@ -28,9 +28,30 @@ function App() {
   window.addEventListener('resize', changeBackground)
 
 
+  const filterFunc = ({ role, level, tools, languages}) => {
+    if(filters.length === 0) {
+      return true;
+    }
+
+    const tags = [role, level]
+
+    if(tools) {
+      tags.push(...tools);
+    }
+
+    if(languages) {
+      tags.push(...languages);
+    }
+
+    return filters.every((filter) => tags.includes(filter));
+  }
+
+  const filteredJobs = jobs.filter(filterFunc);
+  console.log(filteredJobs);
 
 
   function handleTagClick(tag) {
+    // -1 means if the value is not found then push the tag in filters
     if(filters.indexOf(tag) === -1) {
       setFilters(prevState => [...prevState, tag])
     }
@@ -56,37 +77,13 @@ function App() {
         clearFilter={clearFilter}
         clearAll={clearAll}
       />}
-     {/* <FilterComp />  */}
-     {jobs.map((job) => {
-      let jobTags = [job.role, job.level, ...(job.languages) || [], ...(job.tools) || []]
-
-
-      let filterJobs = (jobTags, filters) => 
-          filters.every((filter) => jobTags.includes(filter));
-
-          return filters.length === 0 ? (
-            <JobListComp 
-              job={job}
-              key={job.id}
-              handleTagClick={handleTagClick}
-            />
-          ) :
-          ( filterJobs(jobTags, filters) && (
-
-            <JobListComp
-            job={job}
-            key={job.id}
-            handleTagClick={handleTagClick}
-            />
-            )
-          );
-     })}
-      {/* {jobs.length === 0 ? 
+     
+      {jobs.length === 0 ? 
       (
       <p>Jobs are Fetching ...</p>
       )  : 
       (
-          jobs.map((job) => 
+          filteredJobs.map((job) => 
             <JobListComp
               job={job}
               key={job.id}
@@ -94,7 +91,7 @@ function App() {
              /> 
           )
         )
-      } */}
+      }
     </>
   );
 }
