@@ -77,21 +77,23 @@ function App() {
         clearFilter={clearFilter}
         clearAll={clearAll}
       />}
-     
+     <main>
+
       {jobs.length === 0 ? 
       (
-      <p>Jobs are Fetching ...</p>
+        <p>Jobs are Fetching ...</p>
       )  : 
       (
-          filteredJobs.map((job) => 
-            <JobListComp
-              job={job}
-              key={job.id}
-              handleTagClick={handleTagClick}
-             /> 
-          )
+        filteredJobs.map((job) => 
+        <JobListComp
+        job={job}
+        key={job.id}
+        handleTagClick={handleTagClick}
+        /> 
+        )
         )
       }
+      </main>
     </>
   );
 }
