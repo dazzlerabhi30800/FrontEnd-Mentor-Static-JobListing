@@ -29,6 +29,7 @@ function JobListComp({
         tags.push(...languages);
     }
     return(
+    <div role="main" className='flex flex-col gap-4'>
        <div role="contentinfo" className={`flex flex-col gap-4 py-2 px-4 my-6 bg-teal-50 shadow-lg mx-auto w-96 ${featured && 'border-l-4 border-teal-500 border-solid' } md:flex-row md:w-9/12`}>
          <div className='first--wrapper flex flex-col gap-2'>
             <div className="logo--img w-16 relative mb-4 -mt-8 sm:mt-0">
@@ -52,13 +53,14 @@ function JobListComp({
                 onClick={() => handleTagClick(tag)}
                 key={index} 
                 className="bg-teal-100 px-2 p-1 text-teal-500 font-bold cursor-pointer">{tag}</span>)
-            ) : ''
-
+                ) : ''
+                
             }
              {/* <span className='bg-teal-100 px-2 p-1 text-teal-500 font-bold cursor-pointer'>frontend</span> */}
             {/* // <span className='bg-teal-100 px-2 p-1 text-teal-500 font-bold cursor-pointer'>Backend</span> */}
          </div>
        </div>
+    </div>
     )
 }
 
