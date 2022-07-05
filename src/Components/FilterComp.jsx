@@ -2,7 +2,7 @@ import React from "react";
 
 function FilterComp({ filters, clearFilter, clearAll }) {
   return (
-    <div className="bg-white z-50 relative bottom-10 flex items-center flex-wrap my-0 mx-auto w-[25rem] p-5 shadow-lg md:w-[40rem]">
+    <div role="contentinfo" className="bg-white z-50 relative bottom-10 flex items-center flex-wrap my-0 mx-auto w-[25rem] p-5 shadow-lg md:w-[40rem]">
       {filters.map((tag, index) => {
         return (
           <div key={index} className="bg-teal-100 py-0 px-0 rounded-md flex gap-1 ml-4 my-1 cursor-pointer text-white">

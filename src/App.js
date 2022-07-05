@@ -68,7 +68,7 @@ function App() {
 
   return (
     <>
-      <header className='w-full bg-teal-800 z-10 transition ease-in duration-300'>
+      <header role="banner" className='w-full bg-teal-800 z-10 transition ease-in duration-300'>
         <img className='header--image w-full object-cover z-10' src="../images/bg-header-mobile.svg" alt="" />
       </header>
       {filters.length > 0 && 
